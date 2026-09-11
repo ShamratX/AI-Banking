@@ -1,66 +1,88 @@
-# 💰 Banker Expert – Personal Financial Intelligence
+# AI Banking (Banker Expert)
 
-🎯 **Project Purpose**  
-This project aims to provide a personalized financial assistant that analyzes user data and delivers comprehensive reports — as if was written by a private banker and senior accountant.
+Personal financial assistant that turns user data into banker-style reports. Modular Node.js backend + React frontend.
 
-⚙️ **Tech Stack**  
-- **Backend:** Node.js (Express)  
-- **Authentication Service:** MongoDB  
-- **AI Engine:** Tinyllama  
-- **Crypto Wallet Integration:** CoinGecko API  
-- **Testing:** Jest  
-- **Frontend:** React
+## Features
 
-🧩 **Architecture Overview**  
-The system uses a modular monolith architecture — clear separation of services without microservices overheaded:
+- JWT auth (register, login, profile updates)
+- AI-assisted financial reports
+- Crypto wallet / market data hooks (CoinGecko)
+- Modular Express services with Jest tests
+- React UI (home, profile, reports)
 
-![Diagram](readmeFiles/Diagram.png)
+## Requirements
 
-✅ **Current Features**  
-- 🟢 Base Express server running  
-- 🟢 Modular services   
-- 🟢 Project structured for clarity, testing, and growth  
-- 🟢 Crypto wallet connection and analysis
-- 🟢 AI-generated financial reports  
+- Node.js 18+
+- MongoDB (Atlas or local)
+- Git
 
-🔜 **Coming Soon**  
-  
-- Full frontend interface (React)    
-- Full authentication flow with JWT  
+## Quick start
 
-
-## ⚙️ Installation & Setup
-
-### 📦 Prerequisites
-- Node.js
-- Git for version control  
-
-### 🔄 Clone the Repository
 ```bash
-git clone
-```
-
-**Install dependencies:**
-```bash
+git clone https://github.com/ShamratX/AI-Banking.git
+cd AI-Banking
+cp .env.example .env
 npm install
-```
-
-**Start the server:**
-```bash
 npm run dev
 ```
 
+- Backend: `http://localhost:8000`
+- Frontend: React default (usually `http://localhost:3000`)
 
-## 📡 API Endpoints
+Fill `.env` before first run (see Config).
 
-| Method | Endpoint      | Description                           |
-|--------|---------------|---------------------------------------|
-| POST   | /auth/login   | Authenticate a user                   |
-| POST   | /auth/register| Register a user                       |
-| POST   | /full-report  | Get personalized report               |
+## Config
 
+Copy `.env.example` → `.env` at the repo root:
 
-## 📄 License
-MIT License
+| Variable | Purpose |
+|----------|---------|
+| `MONGO_URI` | MongoDB connection string |
+| `JWT_SECRET` | JWT signing secret |
+| `TINYLLAMA_API_KEY` | AI report engine |
+| `COINGECKO_API_KEY` | Market / wallet data |
+| `NODE_ENV` | `development` / `production` |
 
+Never commit a real `.env`.
 
+## Usage
+
+| Command | What it does |
+|---------|----------------|
+| `npm run dev` | Backend + frontend together |
+| `npm run start:backend` | Backend only |
+| `npm run start:frontend` | Frontend only |
+| `npm --workspace backend test` | Backend Jest tests |
+
+### Main API routes
+
+| Method | Path | Notes |
+|--------|------|-------|
+| POST | `/auth/register` | Create account |
+| POST | `/auth/login` | Login |
+| PATCH | `/auth/update` | Update user (auth) |
+| PATCH | `/auth/updateEmail` | Change email (auth) |
+| PATCH | `/auth/updatePassword` | Change password (auth) |
+| DELETE | `/auth/delete` | Delete account (auth) |
+| POST | `/report` | Generate report (auth) |
+| POST | `/user/preferences` | User preferences (auth) |
+
+## Project structure
+
+```text
+AI-Banking/
+├── backend/          # Express API, services, tests
+├── frontend/         # React app
+├── readmeFiles/      # Diagrams / assets
+├── .env.example
+└── package.json      # npm workspaces root
+```
+
+## Notes
+
+- Backend listens on port **8000** (`backend/src/api.js`).
+- Architecture overview: [readmeFiles/Diagram.png](readmeFiles/Diagram.png)
+
+## License
+
+MIT
