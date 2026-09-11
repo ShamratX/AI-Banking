@@ -1,57 +1,66 @@
-# Banker Expert — Personal Financial Intelligence
+# 💰 Banker Expert – Personal Financial Intelligence
 
-Personalized financial assistant that analyzes user data and delivers banker-style reports.
+🎯 **Project Purpose**  
+This project aims to provide a personalized financial assistant that analyzes user data and delivers comprehensive reports — as if was written by a private banker and senior accountant.
 
-## Tech stack
-
-- **Backend:** Node.js (Express)
-- **Auth / DB:** MongoDB
-- **AI:** Tinyllama
-- **Crypto data:** CoinGecko API
-- **Testing:** Jest
+⚙️ **Tech Stack**  
+- **Backend:** Node.js (Express)  
+- **Authentication Service:** MongoDB  
+- **AI Engine:** Tinyllama  
+- **Crypto Wallet Integration:** CoinGecko API  
+- **Testing:** Jest  
 - **Frontend:** React
 
-## Architecture
-
-Modular monolith — clear service separation without microservices overhead.
+🧩 **Architecture Overview**  
+The system uses a modular monolith architecture — clear separation of services without microservices overheaded:
 
 ![Diagram](readmeFiles/Diagram.png)
 
-## Features
+✅ **Current Features**  
+- 🟢 Base Express server running  
+- 🟢 Modular services   
+- 🟢 Project structured for clarity, testing, and growth  
+- 🟢 Crypto wallet connection and analysis
+- 🟢 AI-generated financial reports  
 
-- Express server with modular services
-- Structure oriented for clarity, testing, and growth
-- Crypto wallet connection and analysis
-- AI-generated financial reports
-- JWT auth (register / login)
-- React frontend
+🔜 **Coming Soon**  
+  
+- Full frontend interface (React)    
+- Full authentication flow with JWT  
 
-## Requirements
 
-- Node.js 18+
-- Git
-- MongoDB (local or Atlas)
+## ⚙️ Installation & Setup
 
-## Setup
+### 📦 Prerequisites
+- Node.js
+- Git for version control  
 
+### 🔄 Clone the Repository
 ```bash
-git clone https://github.com/ShamratX/AI-Banking.git
-cd AI-Banking
-cp .env.example .env
+git clone
+```
+
+**Install dependencies:**
+```bash
 npm install
+```
+
+**Start the server:**
+```bash
 npm run dev
 ```
 
-Fill `.env` before first run. Backend typically serves on port `8000`.
 
-## API endpoints
+## 📡 API Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/auth/login` | Authenticate a user |
-| POST | `/auth/register` | Register a user |
-| POST | `/full-report` | Get personalized report |
+| Method | Endpoint      | Description                           |
+|--------|---------------|---------------------------------------|
+| POST   | /auth/login   | Authenticate a user                   |
+| POST   | /auth/register| Register a user                       |
+| POST   | /full-report  | Get personalized report               |
 
-## License
 
+## 📄 License
 MIT License
+
+
