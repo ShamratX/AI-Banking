@@ -1,20 +1,23 @@
 # AI Banking (Banker Expert)
 
-Personal financial assistant that turns user data into banker-style reports. Modular Node.js backend + React frontend.
+npm-workspace app: **Express** backend + **React** frontend for authenticated users, wallet-oriented reporting, and LLM-assisted insights.
 
 ## Features
 
-- JWT auth (register, login, profile updates)
-- AI-assisted financial reports
-- Crypto wallet / market data hooks (CoinGecko)
-- Modular Express services with Jest tests
-- React UI (home, profile, reports)
+- JWT auth: register, login, profile/email/password updates, delete, preferences
+- Report pipeline via Moralis wallet data + action / P&amp;L style report services
+- React UI: home, profile, protected report page
+- Jest tests under the backend workspace
+
+## How it works
+
+Root `npm run dev` starts backend and frontend via `concurrently`. Frontend talks to the API (report UI targets `http://localhost:8000`). Backend connects MongoDB, authenticates with JWT, and builds reports from wallet services. LLM calls in code target an Ollama-compatible HTTP endpoint (not a third-party TinyLlama cloud key in the JS path).
 
 ## Requirements
 
 - Node.js 18+
-- MongoDB (Atlas or local)
-- Git
+- MongoDB
+- Moralis API access for wallet features used by the backend
 
 ## Quick start
 
@@ -26,63 +29,52 @@ npm install
 npm run dev
 ```
 
-- Backend: `http://localhost:8000`
-- Frontend: React default (usually `http://localhost:3000`)
+- Backend: `http://localhost:8000` (port is set in `backend/src/api.js`)
+- Frontend: CRA default (usually `http://localhost:3000`)
 
-Fill `.env` before first run (see Config).
+```bash
+npm run start:backend
+npm run start:frontend
+npm --workspace backend test
+```
 
-## Config
+## Config (env names)
 
-Copy `.env.example` → `.env` at the repo root:
+Documented in `.env.example`: `MONGO_URI`, `JWT_SECRET`, `TINYLLAMA_API_KEY`, `COINGECKO_API_KEY`, `NODE_ENV`, `PORT`, optional SMTP/Redis keys.
 
-| Variable | Purpose |
-|----------|---------|
-| `MONGO_URI` | MongoDB connection string |
-| `JWT_SECRET` | JWT signing secret |
-| `TINYLLAMA_API_KEY` | AI report engine |
-| `COINGECKO_API_KEY` | Market / wallet data |
-| `NODE_ENV` | `development` / `production` |
+**Used by backend code today:** `MONGO_URI`, `JWT_SECRET`, `MORALIS_API_KEY` (add to `.env` even if not listed in the example).
 
-Never commit a real `.env`.
+Treat example-only keys as optional until wired in code.
 
-## Usage
-
-| Command | What it does |
-|---------|----------------|
-| `npm run dev` | Backend + frontend together |
-| `npm run start:backend` | Backend only |
-| `npm run start:frontend` | Frontend only |
-| `npm --workspace backend test` | Backend Jest tests |
-
-### Main API routes
+## Main API routes
 
 | Method | Path | Notes |
 |--------|------|-------|
 | POST | `/auth/register` | Create account |
 | POST | `/auth/login` | Login |
-| PATCH | `/auth/update` | Update user (auth) |
-| PATCH | `/auth/updateEmail` | Change email (auth) |
-| PATCH | `/auth/updatePassword` | Change password (auth) |
-| DELETE | `/auth/delete` | Delete account (auth) |
-| POST | `/report` | Generate report (auth) |
-| POST | `/user/preferences` | User preferences (auth) |
+| PATCH | `/auth/update` | Auth required |
+| PATCH | `/auth/updateEmail` | Auth required |
+| PATCH | `/auth/updatePassword` | Auth required |
+| PATCH | `/auth/updatePreferences` | Auth required |
+| DELETE | `/auth/delete` | Auth required |
+| POST | `/report` | Auth required |
+| POST | `/user/preferences` | Auth required |
 
 ## Project structure
 
 ```text
-AI-Banking/
-├── backend/          # Express API, services, tests
-├── frontend/         # React app
-├── readmeFiles/      # Diagrams / assets
-├── .env.example
-└── package.json      # npm workspaces root
+backend/     # Express API, services, tests
+frontend/    # React (CRA)
+readmeFiles/ # diagrams
+package.json # workspaces root
 ```
 
-## Notes
+## Limitations
 
-- Backend listens on port **8000** (`backend/src/api.js`).
-- Architecture overview: [readmeFiles/Diagram.png](readmeFiles/Diagram.png)
+- `PORT` in `.env` may not override the hardcoded `8000` listen port.
+- Some README/example AI/market keys are not referenced in backend JS; Moralis + Ollama paths are.
+- Requires local/remote Ollama (or compatible) if LLM insights are expected.
 
 ## License
 
-MIT
+MIT (per project docs).
